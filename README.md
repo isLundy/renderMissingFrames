@@ -1,2 +1,2 @@
-# missingFrames (test)
+# missingFrames (testing)
 A script for Nuke.
