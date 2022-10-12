@@ -5,14 +5,11 @@ from PySide2.QtGui import QCursor
 from PySide2.QtCore import Qt
 
 class MissingFrames(QWidget):
-    def __init__(self, start, end):
+    def __init__(self):
         super(MissingFrames, self).__init__()
 
         self.node = nuke.selectedNode()
         self.node.selectOnly()
-
-        self.start = start
-        self.end = end
 
         if self.node.Class() == 'Write':
             self.setUI()
@@ -20,31 +17,53 @@ class MissingFrames(QWidget):
             self.show()
 
     def setUI(self):
-        nodeLabel = QLabel(self.node.name())
-        mfLabel = QLabel('Missing Frames')
+            self.nodeLabel = QLabel(self.node.name())
 
-        mfText = QLineEdit()
-        mfText.setText(self.missingFrames())
-        mfText.setReadOnly(True)
+            self.rangeLabel = QLabel('Frame range')
+            self.startText = QLineEdit()
+            self.startText.setText(str(int(nuke.root()['first_frame'].getValue())))
+            self.toLabel = QLabel('-')
+            self.endText = QLineEdit()
+            self.endText.setText(str(int(nuke.root()['last_frame'].getValue())))
+            self.checkButton = QPushButton('Checking')
 
-        renderButton = QPushButton('Render the Missing Frames')
-        renderButton.clicked.connect(self.close)
+            self.mfLabel = QLabel('Missing Frames')
+            self.mfText = QLineEdit()
+            self.mfText.setReadOnly(True)
+            self.checkButton.clicked.connect(self.checking)
 
-        hbox = QHBoxLayout()
-        hbox.addStretch()
-        hbox.addWidget(mfLabel)
-        hbox.addWidget(mfText)
-        hbox.addStretch()
+            self.renderButton = QPushButton('Render the Missing Frames')
+            self.renderButton.clicked.connect(self.close)
 
-        vbox = QVBoxLayout()
-        vbox.addWidget(nodeLabel)
-        vbox.addStretch()
-        vbox.addLayout(hbox)
-        vbox.addStretch()
-        vbox.addWidget(renderButton)
+            hbox = QHBoxLayout()
+            hbox.addWidget(self.nodeLabel)
+            hbox.addWidget(self.rangeLabel)
+            hbox.addWidget(self.startText)
+            hbox.addWidget(self.toLabel)
+            hbox.addWidget(self.endText)
+            hbox.addWidget(self.checkButton)
+            hbox.addWidget(self.mfLabel)
+            hbox.addWidget(self.mfText)
+            hbox.addStretch()
 
+            vbox = QVBoxLayout()
+            vbox.addStretch()
+            vbox.addLayout(hbox)
+            vbox.addStretch()
+            vbox.addWidget(self.renderButton)
 
-        self.setLayout(vbox)
+            self.setLayout(vbox)
+
+    def setPZ(self):
+        self.setWindowTitle('Missing Frames')
+        self.resize(1200, 200)
+
+        qr = self.frameGeometry()
+        screenCenter = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(screenCenter)
+        self.move(qr.topLeft())
+        
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
 
     def missingFrames(self):
         frameNum = self.node['file'].getValue().split('.')[-2]
@@ -54,35 +73,27 @@ class MissingFrames(QWidget):
         print(evalStr)
         print(seq)
 
-        frames = []
+        self.frames = []
         for frame in range(self.start, self.end+1):
             file = seq%frame
             if not os.path.exists(file):
-                frames.append(frame)
+                self.frames.append(frame)
 
-        nums = ""
-        if frames:
-            for frame in frames:
-                if frame-1 in frames:
-                    if frame-2 in frames:
-                        nums = nums.replace(str(frame-1), str(frame))
+        self.missingNums = ''
+        if self.frames:
+            for frame in self.frames:
+                if frame-1 in self.frames:
+                    if frame-2 in self.frames:
+                        self.missingNums = self.missingNums.replace(str(frame-1), str(frame))
                     else:
-                        nums += '-%s'%frame
+                        self.missingNums += '-%s'%frame
                 else:
-                    nums += ' %s'%frame
-        print(nums)
+                    self.missingNums += ' %s'%frame
 
-        return nums.strip()
+    def checking(self):
+        self.start = int(self.startText.text())
+        self.end = int(self.endText.text())
+        self.missingFrames()
+        self.mfText.setText(self.missingNums)
 
-    def setPZ(self):
-        self.setWindowTitle('Missing Frames')
-        self.resize(600, 200)
-
-        qr = self.frameGeometry()
-        screenCenter = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(screenCenter)
-        self.move(qr.topLeft())
-        
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
-
-mf = MissingFrames(1001, 1179)
+mf = MissingFrames()
