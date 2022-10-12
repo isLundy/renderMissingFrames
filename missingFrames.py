@@ -4,8 +4,8 @@ def missingFrames(start, end):
     node = nuke.selectedNode()
     if node.Class() == 'Write':
         frameNum = node['file'].getValue().split('.')[-2]
-        evalStr = node['file'].evaluate().split('.')
-        seq = '%s.%s.%s'%('.'.join(evalStr[:-2]), frameNum, evalStr[-1])
+        evalStr = node['file'].evaluate().rsplit('.', 2)
+        seq = '%s.%s.%s'%(evalStr[0], frameNum, evalStr[-1])
         print(frameNum)
         print(evalStr)
         print(seq)
