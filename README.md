@@ -1,2 +1,2 @@
-# missingFrames (testing)
+# testing
 A python script for Nuke.
