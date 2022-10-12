@@ -40,7 +40,7 @@ class MissingFrames(QWidget):
             self.renderButton = QPushButton('Render the Missing Frames')
             self.renderButton.setEnabled(False)
             #clicked
-            self.renderButton.clicked.connect(self.renderTheFrames)
+            self.renderButton.clicked.connect(self.renderTheMissingFrames)
 
             hbox = QHBoxLayout()
             hbox.addWidget(self.nodeLabel)
@@ -83,8 +83,6 @@ class MissingFrames(QWidget):
             if not os.path.exists(file):
                 self.frames.append(frame)
 
-        print(self.frames)
-
         self.missingNums = ''
         if self.frames:
             for frame in self.frames:
@@ -98,25 +96,30 @@ class MissingFrames(QWidget):
         self.missingNums = self.missingNums.strip()
 
     def checking(self):
-        self.start = int(self.startText.text())
-        self.end = int(self.endText.text())
-        self.missingFrames()
-
-        if self.frames:
-            self.mfLabel.setEnabled(True)
-            self.mfText.setEnabled(True)
-            self.mfText.setText(self.missingNums)
-            self.renderButton.setEnabled(True)
+        try:
+            self.start = int(self.startText.text())
+            self.end = int(self.endText.text())
+        except:
+            pass
         else:
-            self.mfLabel.setEnabled(False)
-            self.mfText.setEnabled(False)
-            self.mfText.setText('None')
-            self.renderButton.setEnabled(False)
+            if self.start <= self.end:
+                self.missingFrames()
+                self.mfLabel.setText('Missing {} Frames'.format(len(self.frames)))
 
-    def renderTheFrames(self):
+                if self.frames:
+                    self.mfLabel.setEnabled(True)
+                    self.mfText.setEnabled(True)
+                    self.mfText.setText(self.missingNums)
+                    self.renderButton.setEnabled(True)
+                else:
+                    self.mfLabel.setEnabled(False)
+                    self.mfText.setEnabled(False)
+                    self.mfText.setText('None')
+                    self.renderButton.setEnabled(False)
+
+    def renderTheMissingFrames(self):
         self.close()
         framerange = nuke.FrameRanges(self.frames)
-        print(framerange)
         nuke.execute(self.node, framerange, continueOnError=True)
 
 mf = MissingFrames()
