@@ -21,19 +21,26 @@ class MissingFrames(QWidget):
 
             self.rangeLabel = QLabel('Frame range')
             self.startText = QLineEdit()
+            self.startText.setPlaceholderText('check start frame')
             self.startText.setText(str(int(nuke.root()['first_frame'].getValue())))
             self.toLabel = QLabel('-')
             self.endText = QLineEdit()
+            self.endText.setPlaceholderText('check end frame')
             self.endText.setText(str(int(nuke.root()['last_frame'].getValue())))
-            self.checkButton = QPushButton('Checking')
+            self.checkingButton = QPushButton('Checking')
 
             self.mfLabel = QLabel('Missing Frames')
+            self.mfLabel.setEnabled(False)
             self.mfText = QLineEdit()
             self.mfText.setReadOnly(True)
-            self.checkButton.clicked.connect(self.checking)
+            self.mfText.setEnabled(False)
+            #clicked
+            self.checkingButton.clicked.connect(self.checking)
 
             self.renderButton = QPushButton('Render the Missing Frames')
-            self.renderButton.clicked.connect(self.close)
+            self.renderButton.setEnabled(False)
+            #clicked
+            self.renderButton.clicked.connect(self.renderTheFrames)
 
             hbox = QHBoxLayout()
             hbox.addWidget(self.nodeLabel)
@@ -41,7 +48,7 @@ class MissingFrames(QWidget):
             hbox.addWidget(self.startText)
             hbox.addWidget(self.toLabel)
             hbox.addWidget(self.endText)
-            hbox.addWidget(self.checkButton)
+            hbox.addWidget(self.checkingButton)
             hbox.addWidget(self.mfLabel)
             hbox.addWidget(self.mfText)
             hbox.addStretch()
@@ -69,15 +76,14 @@ class MissingFrames(QWidget):
         frameNum = self.node['file'].getValue().split('.')[-2]
         evalStr = self.node['file'].evaluate().rsplit('.', 2)
         seq = '%s.%s.%s'%(evalStr[0], frameNum, evalStr[-1])
-        print(frameNum)
-        print(evalStr)
-        print(seq)
 
         self.frames = []
         for frame in range(self.start, self.end+1):
             file = seq%frame
             if not os.path.exists(file):
                 self.frames.append(frame)
+
+        print(self.frames)
 
         self.missingNums = ''
         if self.frames:
@@ -89,11 +95,28 @@ class MissingFrames(QWidget):
                         self.missingNums += '-%s'%frame
                 else:
                     self.missingNums += ' %s'%frame
+        self.missingNums = self.missingNums.strip()
 
     def checking(self):
         self.start = int(self.startText.text())
         self.end = int(self.endText.text())
         self.missingFrames()
-        self.mfText.setText(self.missingNums)
+
+        if self.frames:
+            self.mfLabel.setEnabled(True)
+            self.mfText.setEnabled(True)
+            self.mfText.setText(self.missingNums)
+            self.renderButton.setEnabled(True)
+        else:
+            self.mfLabel.setEnabled(False)
+            self.mfText.setEnabled(False)
+            self.mfText.setText('None')
+            self.renderButton.setEnabled(False)
+
+    def renderTheFrames(self):
+        self.close()
+        framerange = nuke.FrameRanges(self.frames)
+        print(framerange)
+        nuke.execute(self.node, framerange, continueOnError=True)
 
 mf = MissingFrames()
