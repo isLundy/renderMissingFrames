@@ -6,6 +6,8 @@ def missingFrames(start, end):
         frameNum = node['file'].getValue().split('.')[-2]
         evalStr = node['file'].evaluate().split('.')
         seq = '%s.%s.%s'%('.'.join(evalStr[:-2]), frameNum, evalStr[-1])
+        print(frameNum)
+        print(evalStr)
         print(seq)
 
         frames = []
@@ -15,13 +17,14 @@ def missingFrames(start, end):
                 frames.append(frame)
 
         nums = ""
-        for frame in frames:
-            if frame-1 in frames:
-                if frame-2 in frames:
-                    nums = nums.replace(str(frame-1), str(frame))
+        if frames:
+            for frame in frames:
+                if frame-1 in frames:
+                    if frame-2 in frames:
+                        nums = nums.replace(str(frame-1), str(frame))
+                    else:
+                        nums += '-%s'%frame
                 else:
-                    nums += '-%s'%frame
-            else:
-                nums += ' %s'%frame
+                    nums += ' %s'%frame
 
         return nums.strip()
