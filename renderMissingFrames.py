@@ -32,7 +32,10 @@ class RenderMissingFrames(QWidget):
             self.endText.setPlaceholderText('check end frame')
             self.endText.setText(str(int(nuke.root()['last_frame'].getValue())))
 
+            button_hover = "QPushButton:hover{background:#0161FD; color:#FFFFFF}"
+
             self.checkingButton = QPushButton('Checking')
+            self.checkingButton.setStyleSheet(button_hover)
             self.checkingButton.clicked.connect(self.checking)
 
             self.mfLabel = QLabel('Missing Frames')
@@ -46,21 +49,21 @@ class RenderMissingFrames(QWidget):
             
             self.renderButton = QPushButton('Render Missing Frames')
             self.renderButton.setEnabled(False)
+            self.renderButton.setStyleSheet(button_hover)
             self.renderButton.clicked.connect(self.renderMissingFrames)
 
             grid = QGridLayout()
             grid.setSpacing(10)
             grid.setMargin(20)
 
+            grid.addWidget(self.nodeLabel, 0, 0, Qt.AlignTop)
+
+            grid.addWidget(self.rangeLabel, 1, 1)
             hbox = QHBoxLayout()
             hbox.addWidget(self.startText)
             hbox.addWidget(self.toLabel)
             hbox.addWidget(self.endText)
             hbox.addWidget(self.checkingButton)
-
-            grid.addWidget(self.nodeLabel, 0, 0, Qt.AlignTop)
-
-            grid.addWidget(self.rangeLabel, 1, 1)
             grid.addLayout(hbox, 1, 2)
 
             grid.addWidget(self.mfLabel, 2, 1)
