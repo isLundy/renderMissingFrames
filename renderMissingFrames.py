@@ -32,7 +32,7 @@ class RenderMissingFrames(QWidget):
             self.endText.setPlaceholderText('check end frame')
             self.endText.setText(str(int(nuke.root()['last_frame'].getValue())))
 
-            button_hover = "QPushButton:hover{background:#0161FD; color:#FFFFFF;}"
+            button_hover = "QPushButton:hover{background:#0B6FFE; color:#FFFFFF;}"
 
             self.checkingButton = QPushButton('Checking')
             self.checkingButton.setStyleSheet(button_hover)
