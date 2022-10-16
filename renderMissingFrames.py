@@ -13,7 +13,7 @@ class RenderMissingFrames(QWidget):
 
         if self.node.Class() == 'Write':
             self.setUI()
-            self.setPZ()
+            self.setSP()
             self.show()
 
     def setUI(self):
@@ -80,7 +80,7 @@ class RenderMissingFrames(QWidget):
 
             self.setLayout(grid)
 
-    def setPZ(self):
+    def setSP(self):
         self.setWindowTitle('Render Missing Frames')
         self.resize(600, 200)
 
