@@ -26,6 +26,6 @@ import openExploreDir
 
 s = nuke.menu("Nuke").addMenu("PythonScripts")
 h = s.addMenu("renderMissingFrames")
-h.addCommand("Render Missin gFrames", "renderMissingFrames.RenderMissingFrames()")
+h.addCommand("Render Missin gFrames", "renderMissingFrames")
 ```
 
