@@ -20,12 +20,6 @@ nuke.pluginAddPath('./PythonScripts/renderMissingFrames')
 
 menu.py
 
-```python
-import nuke
-import openExploreDir
 
-s = nuke.menu("Nuke").addMenu("PythonScripts")
-h = s.addMenu("renderMissingFrames")
-h.addCommand("Render Missin gFrames", "renderMissingFrames")
-```
+
 
