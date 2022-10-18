@@ -1,4 +1,5 @@
 import os
+import nuke
 from PySide2.QtWidgets import (QWidget, QLineEdit, QPushButton, QApplication,
         QLayout, QGridLayout, QLabel, QHBoxLayout, QVBoxLayout, QDesktopWidget)
 from PySide2.QtGui import QIntValidator
@@ -13,7 +14,7 @@ class RenderMissingFrames(QWidget):
 
         if self.node.Class() == 'Write':
             self.setUI()
-            self.setSP()
+            self.setSizePositon()
             self.show()
 
     def setUI(self):
@@ -35,7 +36,7 @@ class RenderMissingFrames(QWidget):
             self.startText.setValidator(QIntValidator())
             self.endText.setValidator(QIntValidator())
 
-            button_hover = "QPushButton:hover{background:#0B6FFE; color:#FFFFFF;}"
+            button_hover = "QPushButton:hover{background:#137BFE; color:#FFFFFF;}"
 
             self.checkingButton = QPushButton('Checking')
             self.checkingButton.setStyleSheet(button_hover)
@@ -80,7 +81,7 @@ class RenderMissingFrames(QWidget):
 
             self.setLayout(grid)
 
-    def setSP(self):
+    def setSizePositon(self):
         self.setWindowTitle('Render Missing Frames')
         self.resize(600, 200)
 
