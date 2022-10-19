@@ -12,7 +12,7 @@ The file type must be `sequence` !
 
 ### Install example
 
-You can put the code in [W_hotbox](https://www.nukepedia.com/python/ui/w_hotbox).
+You can put the code in [`W_hotbox`](https://www.nukepedia.com/python/ui/w_hotbox).
 
 <img src="/images/W_hotbox_RenderMissingFrames.png">
 <img src="/images/W_hotbox_RenderMissingFrames_02.png">
