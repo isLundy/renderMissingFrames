@@ -6,9 +6,13 @@ A python script for Nuke.
 
 ### Method:
 
-Select a Write node, then run the script.
+Select a `Write` node, then run the script.
 
-### Show
+The file type must be `sequence` !
+
+### Install example
+
+You can put the code in W_hotbox.
 
 <img src="/images/W_hotbox_RenderMissingFrames.png">
 <img src="/images/W_hotbox_RenderMissingFrames_02.png">
