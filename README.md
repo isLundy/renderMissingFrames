@@ -11,3 +11,4 @@ Select a Write node, then run the script.
 ### Show
 
 <img src="/images/W_hotbox_RenderMissingFrames.png">
+<img src="/images/W_hotbox_RenderMissingFrames_02.png">
