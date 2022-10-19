@@ -7,19 +7,3 @@ A python script for Nuke.
 ### Method:
 
 Select a Write node, then run the script.
-
-### Install example:
-
-init.py
-
-```python
-import nuke
-
-nuke.pluginAddPath('./PythonScripts/renderMissingFrames')
-```
-
-menu.py
-
-
-
-
