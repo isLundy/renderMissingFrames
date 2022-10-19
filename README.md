@@ -7,3 +7,6 @@ A python script for Nuke.
 ### Method:
 
 Select a Write node, then run the script.
+
+### Show
+<img scr="rederMissingFrames/W_hotbox_RenderMissingFrames.png">
