@@ -4,11 +4,15 @@ A python script for Nuke.
 
 > Requirements: Nuke 12 or later
 
+</br>
+
 ### Method:
 
 Select a `Write` node, then run the script.
 
 The file type must be `sequence` !
+
+</br>
 
 ### Install example
 
