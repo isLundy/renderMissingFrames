@@ -10,7 +10,9 @@ A python script for Nuke.
 
 Select a `Write` node, then run the script.
 
-The file type must be `sequence` !
+- The file type must be `sequence` and must follow the rules `<path>/<name>.<frame number variable>.<extension>`
+
+  > example: `<path>/final_comp_v01.%04d.exr` or `<path>/final_comp_v01.####.exr`
 
 <br />
 
