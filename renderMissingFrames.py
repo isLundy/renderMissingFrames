@@ -95,7 +95,7 @@ class RenderMissingFrames(QWidget):
     def missingFrames(self):
         frameNum = self.node['file'].getValue().split('.')[-2]
         
-        if frameNum.startswith('%') or frameNum.startswith('#'):
+        if frameNum.startswith('%'):
             evalStr = self.node['file'].evaluate().rsplit('.', 2)
             seq = '%s.%s.%s'%(evalStr[0], frameNum, evalStr[-1])
 
