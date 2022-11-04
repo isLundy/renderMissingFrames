@@ -2,8 +2,8 @@ import os
 import nuke
 from PySide2.QtWidgets import (QWidget, QLineEdit, QPushButton, QApplication,
         QLayout, QGridLayout, QLabel, QHBoxLayout, QVBoxLayout, QDesktopWidget)
-from PySide2.QtGui import QIntValidator
-from PySide2.QtCore import Qt
+from PySide2.QtGui import QRegExpValidator
+from PySide2.QtCore import Qt, QRegExp
 
 class RenderMissingFrames(QWidget):
     def __init__(self):
@@ -17,7 +17,13 @@ class RenderMissingFrames(QWidget):
             self.setSizePositon()
             self.show()
 
+            # set focus
+            self.checkingButton.setFocus()
+
     def setUI(self):
+            validator = QRegExpValidator(QRegExp(r'\d*'))
+
+            # widgets
             self.nodeLabel = QLabel(self.node.name())
 
             self.rangeLabel = QLabel('Frame range')
@@ -26,15 +32,16 @@ class RenderMissingFrames(QWidget):
             self.startText = QLineEdit()
             self.startText.setPlaceholderText('check start frame')
             self.startText.setText(str(int(nuke.root()['first_frame'].getValue())))
+            self.startText.setValidator(validator)
+            self.startText.editingFinished.connect(self.correct)
 
             self.toLabel = QLabel('-')
 
             self.endText = QLineEdit()
             self.endText.setPlaceholderText('check end frame')
             self.endText.setText(str(int(nuke.root()['last_frame'].getValue())))
-
-            self.startText.setValidator(QIntValidator())
-            self.endText.setValidator(QIntValidator())
+            self.endText.setValidator(validator)
+            self.endText.editingFinished.connect(self.correct)
 
             button_hover = "QPushButton:hover{background:#137BFE; color:#FFFFFF;}"
 
@@ -56,6 +63,7 @@ class RenderMissingFrames(QWidget):
             self.renderButton.setStyleSheet(button_hover)
             self.renderButton.clicked.connect(self.renderMissingFrames)
 
+            # set layout
             grid = QGridLayout()
             grid.setSpacing(10)
             grid.setMargin(20)
@@ -85,13 +93,22 @@ class RenderMissingFrames(QWidget):
         self.setWindowTitle('Render Missing Frames')
         self.resize(600, 200)
 
+        # center
         qr = self.frameGeometry()
         screenCenter = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(screenCenter)
         self.move(qr.topLeft())
         
+        # pin top
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
 
+    def correct(self):
+        try:
+            self.sender().setText(str(int(self.sender().text())))
+        except:
+            pass
+
+    # find missing frames
     def missingFrames(self):
         frameNum = self.node['file'].getValue().split('.')[-2]
         
@@ -118,12 +135,17 @@ class RenderMissingFrames(QWidget):
 
             self.missingNums = self.missingNums.strip()
 
+    # when clicked checking button
     def checking(self):
         try:
             self.start = int(self.startText.text())
             self.end = int(self.endText.text())
         except:
-            pass
+            self.mfLabel.setText('Missing Frames')
+            self.mfLabel.setEnabled(False)
+            self.mfText.setEnabled(False)
+            self.mfText.setText('')
+            self.renderButton.setEnabled(False)
         else:
             if self.start <= self.end:
                 self.missingFrames()
@@ -139,10 +161,22 @@ class RenderMissingFrames(QWidget):
                     self.mfText.setEnabled(False)
                     self.mfText.setText('None')
                     self.renderButton.setEnabled(False)
+            else:
+                self.mfLabel.setText('Missing Frames')
+                self.mfLabel.setEnabled(False)
+                self.mfText.setEnabled(False)
+                self.mfText.setText('')
+                self.renderButton.setEnabled(False)
 
+    # render
     def renderMissingFrames(self):
         self.close()
         frameRanges = nuke.FrameRanges(self.frames)
         nuke.execute(self.node, frameRanges)
+
+    # event
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.checking()
 
 rmf = RenderMissingFrames()
