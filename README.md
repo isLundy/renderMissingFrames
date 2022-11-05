@@ -1,4 +1,4 @@
-# Render Missing Frames ( testing )
+# Render Missing Frames
 
 A python script for Nuke.
 
