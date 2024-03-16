@@ -43,7 +43,7 @@ class RenderMissingFrames(QWidget):
             self.endText.setValidator(validator)
             self.endText.editingFinished.connect(self.correct)
 
-            button_hover = "QPushButton:hover{background:#137BFE; color:#FFFFFF;}"
+            button_hover = "QPushButton:hover{background:#1E90FF; color:#FFFFFF;}"
 
             self.checkingButton = QPushButton('Checking')
             self.checkingButton.setStyleSheet(button_hover)
