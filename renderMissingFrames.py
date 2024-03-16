@@ -58,7 +58,7 @@ class RenderMissingFrames(QWidget):
             self.mfText.setReadOnly(True)
             self.mfText.setEnabled(False)
             
-            self.renderButton = QPushButton('Render Missing Frames')
+            self.renderButton = QPushButton('Render')
             self.renderButton.setEnabled(False)
             self.renderButton.setStyleSheet(button_hover)
             self.renderButton.clicked.connect(self.renderMissingFrames)
@@ -180,3 +180,4 @@ class RenderMissingFrames(QWidget):
             self.checking()
 
 rmf = RenderMissingFrames()
+rmf.checking()
