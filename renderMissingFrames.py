@@ -178,6 +178,8 @@ class RenderMissingFrames(QWidget):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
             self.checking()
+        elif event.key() == Qt.Key_Escape:
+            self.close()
 
 rmf = RenderMissingFrames()
 rmf.checking()
