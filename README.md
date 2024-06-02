@@ -2,21 +2,21 @@
   Render Missing Frames
 </h1>
 
-> Requirements: Nuke 13 or later
-
 <br />
 
 ### Usage
+> Suggestion: Nuke 13 or later
 
 Select a `Write` node, then run the script.
 
 - The file type must be `sequence` and must follow the rules `<path>/<name>.<frame number variable>.<extension>`
 
-  > example: `<path>/final_comp_v001.%04d.exr` or `<path>/final_comp_v001.####.exr`
+  example: `<path>/final_comp_v001.%04d.exr` or `<path>/final_comp_v001.####.exr`
 
 <br />
 
-### Install example
+### INstallation
+example:
 
 You can put the code in `W_hotbox`.
 
