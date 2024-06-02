@@ -1,12 +1,9 @@
 # Render Missing Frames
-
-A python script for Nuke.
-
 > Requirements: Nuke 12 or later
 
 <br />
 
-### Method:
+### Usage
 
 Select a `Write` node, then run the script.
 
