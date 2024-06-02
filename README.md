@@ -21,7 +21,7 @@ Select a `Write` node, then run the script.
 <br />
 
 ## Installation
-Put the code into the `W_hotbox`.
+You can directly install the [PythonScripts Toolkit for Nuke](https://github.com/isLundy/Nuke-PythonScripts-Toolkit.git), it shows in the `W_hotbox`.
 
 ![usage 01](./images/usage_01.png)
 
