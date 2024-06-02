@@ -5,7 +5,9 @@
 <br />
 
 ## Introduce
+This script will check for missing frames in the rendered sequence of the `Write` node, and then render only those frames.
 
+<br />
 
 ## Usage
 > Suggestion: Nuke 13 or later
