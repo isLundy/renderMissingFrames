@@ -2,7 +2,7 @@
   Render Missing Frames
 </h1>
 
-> Requirements: Nuke 12 or later
+> Requirements: Nuke 13 or later
 
 <br />
 
@@ -18,7 +18,7 @@ Select a `Write` node, then run the script.
 
 ### Install example
 
-You can put the code in [`W_hotbox`](https://www.nukepedia.com/python/ui/w_hotbox).
+You can put the code in `W_hotbox`.
 
 <img src="/images/W_hotbox_RenderMissingFrames.png">
 <img src="/images/W_hotbox_RenderMissingFrames_02.png">
