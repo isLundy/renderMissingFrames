@@ -15,10 +15,6 @@ Select a `Write` node, then run the script.
 
 <br />
 
-### INstallation
-example:
-
-You can put the code in `W_hotbox`.
-
-<img src="/images/W_hotbox_RenderMissingFrames.png">
-<img src="/images/W_hotbox_RenderMissingFrames_02.png">
+### Installation
+![usage 01](./images/usage_01.png)
+![usage_02](./images/usage_02.png)
